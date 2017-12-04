@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/relay-aws-starter
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-deps-{{ checksum "package-lock.json" }}
+      - run: npm i
+      - save_cache:
+          key: npm-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run: npm run relay
+      - run: PUBLIC_PATH=$PUBLIC_PATH npm run build
+      - persist_to_workspace:
+          root: ~/relay-aws-starter
+          paths:
+            - build
+
+  deploy:
+    working_directory: ~/relay-aws-starter
+    docker:
+      - image: circleci/python
+    steps:
+      - attach_workspace:
+          at: ~/relay-aws-starter
+      - run: sudo pip install awscli
+      - run: aws s3 sync build s3://$CIRCLE_BRANCH-relay-aws-starter --delete --region $AWS_DEFAULT_REGION
+      - run: aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths /index.html
+
+workflows:
+  version: 2
+
+  bd:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master

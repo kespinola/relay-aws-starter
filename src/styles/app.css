@@ -1,0 +1,66 @@
+@import "./font-awesome.min.css";
+
+.header--hero {
+  padding: 0;
+  height: auto;
+}
+
+.header--detail .ant-menu {
+  line-height: 62px;
+  border: none;
+}
+
+.carousel--hero {
+  height: 60vh;
+}
+
+.carousel--tile {
+  height: 15vh;
+}
+
+#root,
+.layout--detail,
+.carousel--hero .slick-list,
+.carousel--hero .slick-track,
+.carousel--hero .slick-slide,
+.carousel--tile .slick-list,
+.carousel--tile .slick-track,
+.carousel--tile .slick-slide {
+  height: 100%;
+}
+
+.header--detail {
+  background: none;
+  margin: 0 0 16px 0;
+}
+
+.header--detail .ant-menu {
+  background: none;
+}
+
+.carousel__slide {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.card__footer {
+  display: flex;
+}
+
+.card__footer--right {
+  margin-left: auto;
+}
+
+.list--horizontal {
+  display: flex;
+}
+
+.list--horizontal li {
+  margin: 0 6px 0 0;
+}
+
+.collection__tile {
+  margin: 16px 0;
+}
